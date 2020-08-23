@@ -24,6 +24,12 @@ class LinkRepository {
   findAll() {
     return new Promise((resolve) => resolve(links));
   }
+
+  findById(id) {
+    return new Promise((resolve) => resolve(
+      links.find((link) => link.id === id),
+    ));
+  }
 }
 
 module.exports = new LinkRepository();

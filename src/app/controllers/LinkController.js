@@ -8,7 +8,15 @@ class LinkController {
   }
 
   show(req, res) {
+    const { id } = req.params;
 
+    const link = LinkRepository.findById(id);
+
+    if (!link) {
+      res.status(404).json({ error: 'Link not found' });
+    }
+
+    res.json(link);
   }
 
   store(req, res) {

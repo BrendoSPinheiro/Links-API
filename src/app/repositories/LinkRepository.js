@@ -1,6 +1,6 @@
 const { v4 } = require('uuid');
 
-const links = [
+let links = [
   {
     id: v4(),
     title: 'Google',
@@ -29,6 +29,13 @@ class LinkRepository {
     return new Promise((resolve) => resolve(
       links.find((link) => link.id === id),
     ));
+  }
+
+  delete(id) {
+    return new Promise((resolve) => {
+      links = links.filter((link) => link.id !== id);
+      resolve();
+    });
   }
 }
 

@@ -51,6 +51,23 @@ class LinkRepository {
     });
   }
 
+  update(id, { title, link, user_id }) {
+    return new Promise((resolve) => {
+      const updatedLink = {
+        id,
+        title,
+        link,
+        user_id,
+      };
+
+      links = links.map((item) => (
+        item.id === id ? updatedLink : item
+      ));
+
+      resolve(updatedLink);
+    });
+  }
+
   delete(id) {
     return new Promise((resolve) => {
       links = links.filter((link) => link.id !== id);

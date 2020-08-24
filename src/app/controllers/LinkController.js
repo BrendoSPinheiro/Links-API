@@ -20,26 +20,26 @@ class LinkController {
   }
 
   async store(req, res) {
-    const { title, link, user_id } = req.body;
+    const { title, url, user_id } = req.body;
 
-    if (!title || !link) {
+    if (!url) {
       return res.status(400).json({ error: 'insira os dados solicitados' });
     }
 
-    const linkExists = await LinkRepository.findByLink(link);
+    const linkExists = await LinkRepository.findByUrl(url);
 
     if (linkExists) {
       return res.status(404).json({ error: 'Link already exists' });
     }
 
-    const newLink = await LinkRepository.create({ title, link, user_id });
+    const newLink = await LinkRepository.create({ title, url, user_id });
 
     res.json(newLink);
   }
 
   async update(req, res) {
     const { id } = req.params;
-    const { title, link, user_id } = req.body;
+    const { title, url, user_id } = req.body;
 
     const linkExists = await LinkRepository.findById(id);
 
@@ -51,13 +51,13 @@ class LinkController {
       return res.status(400).json({ error: 'Title is required' });
     }
 
-    const linkByUrl = await LinkRepository.findByLink(link);
+    const linkByUrl = await LinkRepository.findByLink(url);
     if (linkByUrl && linkByUrl.id !== id) {
       return res.status(400).json({ error: 'This link is already in use' });
     }
 
     const cardLink = await LinkRepository.update(id, {
-      title, link, user_id,
+      title, url, user_id,
     });
 
     res.json(cardLink);

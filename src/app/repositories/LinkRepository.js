@@ -4,19 +4,19 @@ let links = [
   {
     id: v4(),
     title: 'Google',
-    link: 'www.google.com',
+    url: 'www.google.com',
     user_id: v4(),
   },
   {
     id: v4(),
     title: 'Yahoo',
-    link: 'www.yahoo.com',
+    url: 'www.yahoo.com',
     user_id: v4(),
   },
   {
     id: v4(),
     title: 'Youtube',
-    link: 'www.youtube.com',
+    url: 'www.youtube.com',
     user_id: v4(),
   },
 ];
@@ -31,18 +31,18 @@ class LinkRepository {
     ));
   }
 
-  findByLink(url) {
+  findByUrl(url) {
     return new Promise((resolve) => resolve(
-      links.find((link) => link.link === url),
+      links.find((link) => link.url === url),
     ));
   }
 
-  create({ title, link, user_id }) {
+  create({ title, url, user_id }) {
     return new Promise((resolve) => {
       const newLink = {
         id: v4(),
         title,
-        link,
+        url,
         user_id,
       };
 
@@ -51,17 +51,17 @@ class LinkRepository {
     });
   }
 
-  update(id, { title, link, user_id }) {
+  update(id, { title, url, user_id }) {
     return new Promise((resolve) => {
       const updatedLink = {
         id,
         title,
-        link,
+        url,
         user_id,
       };
 
-      links = links.map((item) => (
-        item.id === id ? updatedLink : item
+      links = links.map((link) => (
+        link.id === id ? updatedLink : link
       ));
 
       resolve(updatedLink);

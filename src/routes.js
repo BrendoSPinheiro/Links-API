@@ -13,6 +13,7 @@ router.delete('/users/:id', UserController.delete);
 // Link Routes
 router.get('/links', LinkController.index);
 router.get('/links/:id', LinkController.show);
+router.post('/links', LinkController.store);
 router.delete('/links/:id', LinkController.delete);
 
 module.exports = router;

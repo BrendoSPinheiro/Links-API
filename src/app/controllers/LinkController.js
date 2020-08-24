@@ -13,14 +13,28 @@ class LinkController {
     const link = await LinkRepository.findById(id);
 
     if (!link) {
-      res.status(404).json({ error: 'Link not found' });
+      return res.status(404).json({ error: 'Link not found' });
     }
 
     res.json(link);
   }
 
-  store(req, res) {
+  async store(req, res) {
+    const { title, link, user_id } = req.body;
 
+    if (!title || !link) {
+      return res.status(400).json({ error: 'insira os dados solicitados' });
+    }
+
+    const linkExists = await LinkRepository.findByLink(link);
+
+    if (linkExists) {
+      return res.status(404).json({ error: 'Link already exists' });
+    }
+
+    const newLink = await LinkRepository.create({ title, link, user_id });
+
+    res.json(newLink);
   }
 
   update(req, res) {
@@ -33,7 +47,7 @@ class LinkController {
     const linkExists = await LinkRepository.findById(id);
 
     if (!linkExists) {
-      res.status(404).json({ error: 'Link not found' });
+      return res.status(404).json({ error: 'Link not found' });
     }
 
     await LinkRepository.delete(id);

@@ -31,6 +31,26 @@ class LinkRepository {
     ));
   }
 
+  findByLink(url) {
+    return new Promise((resolve) => resolve(
+      links.find((link) => link.link === url),
+    ));
+  }
+
+  create({ title, link, user_id }) {
+    return new Promise((resolve) => {
+      const newLink = {
+        id: v4(),
+        title,
+        link,
+        user_id,
+      };
+
+      links.push(newLink);
+      resolve(newLink);
+    });
+  }
+
   delete(id) {
     return new Promise((resolve) => {
       links = links.filter((link) => link.id !== id);

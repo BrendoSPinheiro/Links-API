@@ -53,13 +53,13 @@ class UserRepository {
     });
   }
 
-  update(id, { name, email, password }) {
+  update(id, { name, email, password_hash }) {
     return new Promise((resolve) => {
       const updatedUser = {
         id,
         name,
         email,
-        password,
+        password_hash,
       };
 
       users = users.map((user) => (

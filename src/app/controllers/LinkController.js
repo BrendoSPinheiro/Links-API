@@ -22,14 +22,8 @@ class LinkController {
   async store(req, res) {
     const { title, url, user_id } = req.body;
 
-    if (!url) {
+    if (!title && !url) {
       return res.status(400).json({ error: 'insira os dados solicitados' });
-    }
-
-    const linkExists = await LinkRepository.findByUrl(url);
-
-    if (linkExists) {
-      return res.status(404).json({ error: 'Link already exists' });
     }
 
     const newLink = await LinkRepository.create({ title, url, user_id });

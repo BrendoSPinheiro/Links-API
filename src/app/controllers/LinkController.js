@@ -44,23 +44,23 @@ class LinkController {
     const linkExists = await LinkRepository.findById(id);
 
     if (!linkExists) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: 'Link not found' });
     }
 
     if (!title) {
       return res.status(400).json({ error: 'Title is required' });
     }
 
-    const linkByUrl = await LinkRepository.findByLink(url);
+    const linkByUrl = await LinkRepository.findByUrl(url);
     if (linkByUrl && linkByUrl.id !== id) {
       return res.status(400).json({ error: 'This link is already in use' });
     }
 
-    const cardLink = await LinkRepository.update(id, {
+    const link = await LinkRepository.update(id, {
       title, url, user_id,
     });
 
-    res.json(cardLink);
+    res.json(link);
   }
 
   async delete(req, res) {

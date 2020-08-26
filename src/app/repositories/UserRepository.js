@@ -53,6 +53,23 @@ class UserRepository {
     });
   }
 
+  update(id, { name, email, password }) {
+    return new Promise((resolve) => {
+      const updatedUser = {
+        id,
+        name,
+        email,
+        password,
+      };
+
+      users = users.map((user) => (
+        user.id === id ? updatedUser : user
+      ));
+
+      resolve(updatedUser);
+    });
+  }
+
   delete(id) {
     return new Promise((resolve) => {
       users = users.filter((user) => user.id !== id);

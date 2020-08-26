@@ -1,0 +1,18 @@
+CREATE DATABASE linksmanager;
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE IF NOT EXISTS users(
+  id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+  name VARCHAR NOT NULL,
+  email VARCHAR NOT NULL UNIQUE,
+  password_hash VARCHAR NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS links(
+  id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+  title VARCHAR,
+  url VARCHAR NOT NULL,
+  user_id UUID,
+  FOREIGN KEY(user_id) REFERENCES users(id)
+);

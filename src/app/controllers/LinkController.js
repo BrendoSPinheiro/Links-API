@@ -47,13 +47,8 @@ class LinkController {
       return res.status(404).json({ error: 'Link not found' });
     }
 
-    if (!title) {
-      return res.status(400).json({ error: 'Title is required' });
-    }
-
-    const linkByUrl = await LinkRepository.findByUrl(url);
-    if (linkByUrl && linkByUrl.id !== id) {
-      return res.status(400).json({ error: 'This link is already in use' });
+    if (!title && !url) {
+      return res.status(400).json({ error: 'Title and url is required' });
     }
 
     const link = await LinkRepository.update(id, {

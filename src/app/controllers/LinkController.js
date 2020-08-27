@@ -2,7 +2,7 @@ const LinkRepository = require('../repositories/LinkRepository');
 
 class LinkController {
   async index(req, res) {
-    const links = await LinkRepository.findAll();
+    const links = await LinkRepository.findAllByUserId();
 
     res.json(links);
   }

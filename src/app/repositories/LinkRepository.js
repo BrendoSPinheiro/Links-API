@@ -21,7 +21,7 @@ let links = [
   },
 ];
 class LinkRepository {
-  findAll() {
+  findAllByUserId() {
     return new Promise((resolve) => resolve(links));
   }
 

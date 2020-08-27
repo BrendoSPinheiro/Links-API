@@ -1,11 +1,12 @@
 const { Client } = require('pg');
+const databaseConfig = require('../config/database');
 
 const client = new Client({
-  host: 'localhost',
-  port: 5432,
-  user: 'root',
-  password: 'root',
-  database: 'linksmanager',
+  host: databaseConfig.host,
+  port: databaseConfig.port,
+  user: databaseConfig.user,
+  password: databaseConfig.password,
+  database: databaseConfig.database,
 });
 
 client.connect();

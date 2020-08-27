@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const UserRepository = require('../repositories/UserRepository');
+const passwordValidator = require('../../utils/passwordValidator');
 
 class UserController {
   async index(req, res) {
@@ -61,7 +62,9 @@ class UserController {
       return res.status(400).json({ error: 'This email is already in use' });
     }
 
-    if (oldPassword && !(await bcrypt.compare(oldPassword, userExists.password_hash))) {
+    if (oldPassword && !(await passwordValidator.checkPassword(
+      oldPassword, userExists.password_hash,
+    ))) {
       return res.status(401).json({ error: 'Password does not match' });
     }
 
@@ -89,10 +92,6 @@ class UserController {
     await UserRepository.delete(id);
 
     res.status(202).json({ message: 'User has been deleted' });
-  }
-
-  checkPassword(oldPassword, password) {
-    return bcrypt.compare(oldPassword, password);
   }
 }
 

@@ -68,7 +68,7 @@ class UserController {
     let password_hash;
     if (oldPassword) {
       password_hash = await bcrypt.hash(password, 8);
-    } else if (!password_hash) {
+    } else {
       password_hash = userExists.password_hash;
     }
 

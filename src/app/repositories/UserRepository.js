@@ -14,10 +14,10 @@ let users = [
     password_hash: '654321',
   },
   {
-    id: v4(),
-    name: 'Jose Carlos',
-    email: 'jose@mail.com',
-    password_hash: '202020',
+    id: '9519f09e-58dd-473e-8f9b-db187fc27f4f',
+    name: 'Bruno Santos',
+    email: 'bruno@mail.com',
+    password_hash: '$2a$08$RMT6.lv31ASJX53ziv6IU.qOTCJB6qkCaKcqz4TJbDBANfEdwXqnu',
   },
 ];
 

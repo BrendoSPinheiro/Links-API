@@ -21,8 +21,10 @@ let links = [
   },
 ];
 class LinkRepository {
-  findAllByUserId() {
-    return new Promise((resolve) => resolve(links));
+  findAllByUserId(user_id) {
+    return new Promise((resolve) => resolve(
+      links.filter((link) => link.user_id === user_id),
+    ));
   }
 
   findById(id) {

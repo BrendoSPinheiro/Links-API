@@ -2,7 +2,8 @@ const LinkRepository = require('../repositories/LinkRepository');
 
 class LinkController {
   async index(req, res) {
-    const links = await LinkRepository.findAllByUserId();
+    const { user_id } = req;
+    const links = await LinkRepository.findAllByUserId(user_id);
 
     res.json(links);
   }
@@ -20,9 +21,10 @@ class LinkController {
   }
 
   async store(req, res) {
-    const { title, url, user_id } = req.body;
+    const { user_id } = req;
+    const { title, url } = req.body;
 
-    if (!title && !url) {
+    if (!title || !url) {
       return res.status(400).json({ error: 'insira os dados solicitados' });
     }
 
@@ -33,7 +35,8 @@ class LinkController {
 
   async update(req, res) {
     const { id } = req.params;
-    const { title, url, user_id } = req.body;
+    const { user_id } = req;
+    const { title, url } = req.body;
 
     const linkExists = await LinkRepository.findById(id);
 

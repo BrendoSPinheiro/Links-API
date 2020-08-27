@@ -14,11 +14,11 @@ router.put('/users/:id', authMiddleware, UserController.update);
 router.delete('/users/:id', UserController.delete);
 
 // Link Routes
-router.get('/links', LinkController.index);
-router.get('/links/:id', LinkController.show);
-router.post('/links', LinkController.store);
-router.put('/links/:id', LinkController.update);
-router.delete('/links/:id', LinkController.delete);
+router.get('/links', authMiddleware, LinkController.index);
+router.get('/links/:id', authMiddleware, LinkController.show);
+router.post('/links', authMiddleware, LinkController.store);
+router.put('/links/:id', authMiddleware, LinkController.update);
+router.delete('/links/:id', authMiddleware, LinkController.delete);
 
 // Session rote
 router.post('/session', SessionController.store);

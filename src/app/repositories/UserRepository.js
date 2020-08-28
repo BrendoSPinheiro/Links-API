@@ -1,4 +1,5 @@
 const { v4 } = require('uuid');
+const Query = require('../../database/index');
 
 let users = [
   {
@@ -23,7 +24,9 @@ let users = [
 
 class UserRepository {
   findAll() {
-    return new Promise((resolve) => resolve(users));
+    // return new Promise((resolve) => resolve(users));
+
+    return Query.query('SELECT * FROM users');
   }
 
   findById(id) {
@@ -33,24 +36,19 @@ class UserRepository {
   }
 
   findByEmail(email) {
-    return new Promise((resolve) => resolve(
+    /* return new Promise((resolve) => resolve(
       users.find((user) => user.email === email),
-    ));
+    )); */
+
+    return Query.query(`SELECT user FROM users WHERE email = ${email}`);
   }
 
   create({ name, email, password_hash }) {
-    return new Promise((resolve) => {
-      const newUser = {
-        id: v4(),
-        name,
-        email,
-        password_hash,
-      };
-
-      users.push(newUser);
-
-      resolve(newUser);
-    });
+    return Query.query(`
+      INSERT INTO users (name, email, password_hash) VALUES (
+        '${name}', '${email}', '${password_hash}'
+      ) RETURNING *
+    `);
   }
 
   update(id, { name, email, password_hash }) {

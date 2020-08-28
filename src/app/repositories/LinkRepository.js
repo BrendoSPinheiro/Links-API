@@ -1,4 +1,5 @@
 const { v4 } = require('uuid');
+const Query = require('../../database/index');
 
 let links = [
   {
@@ -22,9 +23,11 @@ let links = [
 ];
 class LinkRepository {
   findAllByUserId(user_id) {
-    return new Promise((resolve) => resolve(
-      links.filter((link) => link.user_id === user_id),
-    ));
+    // return new Promise((resolve) => resolve(
+    // links.filter((link) => link.user_id === user_id),
+    // ));
+
+    return Query.query(`SELECT * FROM links WHERE user_id = ${user_id}`);
   }
 
   findById(id) {

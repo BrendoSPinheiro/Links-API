@@ -8,3 +8,5 @@
 - bycript
 - uuid
 - eslint
+- JsonWebToken
+- Postgres

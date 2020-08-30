@@ -3,11 +3,6 @@ const UserRepository = require('../repositories/UserRepository');
 const passwordValidator = require('../../utils/passwordValidator');
 
 class UserController {
-  async index(req, res) {
-    const users = await UserRepository.findAll();
-    res.json(users);
-  }
-
   async show(req, res) {
     const { id } = req.params;
 
@@ -78,20 +73,6 @@ class UserController {
     const updatedUser = await UserRepository.update(id, { name, email, password_hash });
 
     res.json(updatedUser);
-  }
-
-  async delete(req, res) {
-    const { id } = req.params;
-
-    const userExists = await UserRepository.findById(id);
-
-    if (!userExists) {
-      return res.status(400).json({ error: 'User does not exists' });
-    }
-
-    await UserRepository.delete(id);
-
-    res.status(202).json({ message: 'User has been deleted' });
   }
 }
 

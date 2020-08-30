@@ -7,11 +7,9 @@ const authMiddleware = require('./app/middlewares/authMiddleware');
 const router = Router();
 
 // User Routes
-router.get('/users', UserController.index);
 router.get('/users/:id', UserController.show);
 router.post('/users', UserController.store);
 router.put('/users/:id', authMiddleware, UserController.update);
-router.delete('/users/:id', UserController.delete);
 
 // Link Routes
 router.get('/links', authMiddleware, LinkController.index);

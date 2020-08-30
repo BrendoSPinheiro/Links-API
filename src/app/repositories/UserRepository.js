@@ -23,12 +23,6 @@ let users = [
 ];
 
 class UserRepository {
-  findAll() {
-    // return new Promise((resolve) => resolve(users));
-
-    return Query.query('SELECT * FROM users');
-  }
-
   findById(id) {
     return new Promise((resolve) => resolve(
       users.find((user) => user.id === id),
@@ -65,13 +59,6 @@ class UserRepository {
       ));
 
       resolve(updatedUser);
-    });
-  }
-
-  delete(id) {
-    return new Promise((resolve) => {
-      users = users.filter((user) => user.id !== id);
-      resolve();
     });
   }
 }

@@ -16,11 +16,17 @@ class LinkRepository {
   }
 
   create({ title, url, user_id }) {
-    return Query.query(`INSERT INTO links (title, url, user_id) VALUES ('${title}', '${url}', '${user_id}') RETURNING *`);
+    return Query.query(`
+      INSERT INTO links (title, url, user_id)
+      VALUES ('${title}', '${url}', '${user_id}') RETURNING title, url
+    `);
   }
 
   update(id, { title, url }) {
-    return Query.query(`UPDATE links SET title = '${title}', url = '${url}' WHERE id = '${id}' RETURNING title, url`);
+    return Query.query(`
+      UPDATE links SET title = '${title}', url = '${url}'
+      WHERE id = '${id}' RETURNING title, url
+    `);
   }
 
   delete(id) {

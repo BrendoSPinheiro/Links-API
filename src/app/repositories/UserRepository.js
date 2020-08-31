@@ -29,12 +29,9 @@ class UserRepository {
     ));
   }
 
-  findByEmail(email) {
-    /* return new Promise((resolve) => resolve(
-      users.find((user) => user.email === email),
-    )); */
-
-    return Query.query(`SELECT user FROM users WHERE email = ${email}`);
+  async findByEmail(email) {
+    const [user] = await Query.query(`SELECT user FROM users WHERE email = '${email}'`);
+    return user;
   }
 
   create({ name, email, password_hash }) {

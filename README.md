@@ -15,7 +15,7 @@
 
 This project aims to help you store and organize your most important and / or favorite links.
 
-### <P id='tecnology'>🖥 Technologies used</p>
+### <P id='technologies'>🖥 Technologies used</p>
 
 This project was built 100% on the express and its good practices, follows the list of dependencies used in this project.
 

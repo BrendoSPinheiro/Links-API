@@ -26,3 +26,21 @@ This project was built 100% on the express and its good practices, follows the l
 - eslint
 - JsonWebToken
 - Postgres
+
+### <p id='how-to-use'>⚙️ How to use</p>
+
+#### First clone the project
+
+```shell
+$ git clone https://github.com/BrendoSPinheiro/Links-API
+```
+
+#### 🔥 Install dependencies
+
+```shell
+$ yarn
+
+# or
+
+$ npm install
+```

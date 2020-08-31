@@ -7,7 +7,6 @@ const authMiddleware = require('./app/middlewares/authMiddleware');
 const router = Router();
 
 // User Routes
-router.get('/users/:id', UserController.show);
 router.post('/users', UserController.store);
 router.put('/users/:id', authMiddleware, UserController.update);
 

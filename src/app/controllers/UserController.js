@@ -3,18 +3,6 @@ const UserRepository = require('../repositories/UserRepository');
 const passwordValidator = require('../../utils/passwordValidator');
 
 class UserController {
-  async show(req, res) {
-    const { id } = req.params;
-
-    const user = await UserRepository.findById(id);
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    res.json(user);
-  }
-
   async store(req, res) {
     const { name, email, password } = req.body;
 

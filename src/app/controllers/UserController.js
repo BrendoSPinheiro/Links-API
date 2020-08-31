@@ -6,8 +6,8 @@ class UserController {
   async store(req, res) {
     const { name, email, password } = req.body;
 
-    if (!name) {
-      return res.status(400).json({ error: 'Name is required' });
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: 'fill in the required data' });
     }
 
     const userExists = await UserRepository.findByEmail(email);

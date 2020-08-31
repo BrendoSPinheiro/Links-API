@@ -1,83 +1,30 @@
-const { v4 } = require('uuid');
 const Query = require('../../database/index');
 
-let links = [
-  {
-    id: v4(),
-    title: 'Google',
-    url: 'www.google.com',
-    user_id: v4(),
-  },
-  {
-    id: v4(),
-    title: 'Yahoo',
-    url: 'www.yahoo.com',
-    user_id: v4(),
-  },
-  {
-    id: v4(),
-    title: 'Youtube',
-    url: 'www.youtube.com',
-    user_id: v4(),
-  },
-];
 class LinkRepository {
   findAllByUserId(user_id) {
-    // return new Promise((resolve) => resolve(
-    // links.filter((link) => link.user_id === user_id),
-    // ));
-
-    return Query.query(`SELECT * FROM links WHERE user_id = ${user_id}`);
+    return Query.query(`SELECT * FROM links WHERE user_id = '${user_id}'`);
   }
 
-  findById(id) {
-    return new Promise((resolve) => resolve(
-      links.find((link) => link.id === id),
-    ));
+  async findById(id) {
+    const [link] = await Query.query(`SELECT * FROM links WHERE id = '${id}'`);
+    return link;
   }
 
-  findByUrl(url) {
-    return new Promise((resolve) => resolve(
-      links.find((link) => link.url === url),
-    ));
+  async findByUrl(url) {
+    const [link] = await Query.query(`SELECT * FROM users WHERE url = '${url}'`);
+    return link;
   }
 
   create({ title, url, user_id }) {
-    return new Promise((resolve) => {
-      const newLink = {
-        id: v4(),
-        title,
-        url,
-        user_id,
-      };
-
-      links.push(newLink);
-      resolve(newLink);
-    });
+    return Query.query(`INSERT INTO links (title, url, user_id) VALUES ('${title}', '${url}', '${user_id}') RETURNING *`);
   }
 
-  update(id, { title, url, user_id }) {
-    return new Promise((resolve) => {
-      const updatedLink = {
-        id,
-        title,
-        url,
-        user_id,
-      };
-
-      links = links.map((link) => (
-        link.id === id ? updatedLink : link
-      ));
-
-      resolve(updatedLink);
-    });
+  update(id, { title, url }) {
+    return Query.query(`UPDATE links SET title = '${title}', url = '${url}' WHERE id = '${id}' RETURNING title, url`);
   }
 
   delete(id) {
-    return new Promise((resolve) => {
-      links = links.filter((link) => link.id !== id);
-      resolve();
-    });
+    return Query.query(`DELETE FROM links WHERE id = '${id}'`);
   }
 }
 

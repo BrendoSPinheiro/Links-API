@@ -44,12 +44,16 @@ class LinkController {
       return res.status(404).json({ error: 'Link not found' });
     }
 
+    if (linkExists.user_id !== user_id) {
+      return res.status(400).json({ error: 'Do not have permission' });
+    }
+
     if (!title && !url) {
       return res.status(400).json({ error: 'Title and url is required' });
     }
 
     const link = await LinkRepository.update(id, {
-      title, url, user_id,
+      title, url,
     });
 
     res.json(link);

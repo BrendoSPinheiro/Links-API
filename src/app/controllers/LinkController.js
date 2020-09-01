@@ -24,7 +24,7 @@ class LinkController {
   async store(req, res) {
     const schema = Yup.object().shape({
       title: Yup.string().required(),
-      url: Yup.string.required(),
+      url: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -42,7 +42,7 @@ class LinkController {
   async update(req, res) {
     const schema = Yup.object.shape({
       title: Yup.string().required(),
-      url: Yup.string.required(),
+      url: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {

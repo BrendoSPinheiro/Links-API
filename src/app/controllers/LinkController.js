@@ -1,3 +1,4 @@
+const Yup = require('yup');
 const LinkRepository = require('../repositories/LinkRepository');
 
 class LinkController {
@@ -21,12 +22,17 @@ class LinkController {
   }
 
   async store(req, res) {
+    const schema = Yup.object().shape({
+      title: Yup.string().required(),
+      url: Yup.string.url().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const { user_id } = req;
     const { title, url } = req.body;
-
-    if (!title || !url) {
-      return res.status(400).json({ error: 'insira os dados solicitados' });
-    }
 
     const newLink = await LinkRepository.create({ title, url, user_id });
 
@@ -34,6 +40,15 @@ class LinkController {
   }
 
   async update(req, res) {
+    const schema = Yup.object.shape({
+      title: Yup.string().required(),
+      url: Yup.string.url().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const { id } = req.params;
     const { user_id } = req;
     const { title, url } = req.body;
@@ -46,10 +61,6 @@ class LinkController {
 
     if (linkExists.user_id !== user_id) {
       return res.status(400).json({ error: 'Do not have permission' });
-    }
-
-    if (!title && !url) {
-      return res.status(400).json({ error: 'Title and url is required' });
     }
 
     const link = await LinkRepository.update(id, {

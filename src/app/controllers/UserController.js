@@ -1,14 +1,21 @@
 const bcrypt = require('bcryptjs');
+const Yup = require('yup');
 const UserRepository = require('../repositories/UserRepository');
 const passwordValidator = require('../../utils/passwordValidator');
 
 class UserController {
   async store(req, res) {
-    const { name, email, password } = req.body;
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string().email().required(),
+      password: Yup.string().required().min(6),
+    });
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ error: 'fill in the required data' });
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
     }
+
+    const { name, email, password } = req.body;
 
     const userExists = await UserRepository.findByEmail(email);
     if (userExists) {
@@ -23,20 +30,28 @@ class UserController {
   }
 
   async update(req, res) {
+    const schema = Yup.object.shape({
+      name: Yup.string(),
+      email: Yup.string().email(),
+      oldPassword: Yup.string().min(6),
+      password: Yup.string().min(6).when('oldPassword',
+        (oldPassword, field) => (oldPassword ? field.required() : field)),
+      confirmPassword: Yup.string().when('password',
+        (password, field) => (password ? field.required().oneOf(
+          [Yup.ref('password')],
+        ) : field)),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const { id } = req.params;
     const { name, email, oldPassword, password } = req.body;
 
     const userExists = await UserRepository.findById(id);
     if (!userExists) {
       return res.status(404).json({ error: 'User not found' });
-    }
-
-    if (!name) {
-      return res.status(400).json({ error: 'Name is required' });
-    }
-
-    if (oldPassword && !password) {
-      return res.status(400).json({ error: 'Password is required' });
     }
 
     const userByEmail = await UserRepository.findByEmail(email);
@@ -57,7 +72,8 @@ class UserController {
       password_hash = userExists.password_hash;
     }
 
-    const updatedUser = await UserRepository.update(id, { name, email, password_hash });
+    const updatedUser = await UserRepository.update(id,
+      { name, email, password_hash });
 
     res.json(updatedUser);
   }

@@ -17,7 +17,7 @@ class UserRepository {
     return Query.query(`
       INSERT INTO users (name, email, password_hash) VALUES (
         '${name}', '${email}', '${password_hash}'
-      ) RETURNING *
+      ) RETURNING id, name, email
     `);
   }
 

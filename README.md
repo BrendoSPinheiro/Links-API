@@ -47,6 +47,8 @@ $ npm install
 ### <p id='Functionalities'>💻 Functionalities</p>
 #### LinkManager(back-end) has 8 routes currently and 1 middleware the authentication:
 
+Routes
+
 | Routes       |                                                                                         |
 | ------------ | --------------------------------------------------------------------------------------- |
 | Create User  | Create user                                                                             |

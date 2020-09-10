@@ -44,3 +44,25 @@ $ yarn
 
 $ npm install
 ```
+### <p id='Functionalities'>💻 Functionalities</p>
+#### LinkManager(back-end) has 8 routes currently and 1 middleware the authentication:
+
+| Routes       |                                                                                         |
+| ------------ | --------------------------------------------------------------------------------------- |
+| Create User  | Create user                                                                             |
+| Update User  | User update, but for that you need to register, returning a token                       |
+| Login        | login, but for that you need to register, returning a token                             |
+| Create Link  | Create links, need to be logged in, to create you need to pass the valid id and token   |
+| List Links   | List Links, need to be logged in, to list links you need to pass the valid id and token |
+| Find Link    | Find Link, need to be logged in, to find link you need to pass the valid id and token   |
+| Update Link  | Update Links, need to be logged in, to update link you need to pass the valid id and token |
+| Delete Links | Delete Links, need to be logged in, to delete link you need to pass the valid id and token |
+
+<br/>
+
+Middleware
+
+| Middleware   |                                                                                         |
+| ------------ | --------------------------------------------------------------------------------------- |
+| Auth         | Authenticates users, returning whether they have permission or not, implemented in the routes to create, update, list, find and delete links.                                                                             |
+

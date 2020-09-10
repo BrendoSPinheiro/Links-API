@@ -18,7 +18,7 @@ class LinkRepository {
   create({ title, url, user_id }) {
     return Query.query(`
       INSERT INTO links (title, url, user_id)
-      VALUES ('${title}', '${url}', '${user_id}') RETURNING title, url
+      VALUES ('${title}', '${url}', '${user_id}') RETURNING id, title, url
     `);
   }
 

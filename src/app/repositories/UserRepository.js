@@ -25,7 +25,7 @@ class UserRepository {
     return Query.query(`
     UPDATE users SET
       name = '${name}', email = '${email}', password_hash = '${password_hash}'
-      WHERE id = '${id}' RETURNING *
+      WHERE id = '${id}' RETURNING id, name, email
     `);
   }
 }

@@ -4,6 +4,12 @@ const UserRepository = require('../repositories/UserRepository');
 const passwordValidator = require('../../utils/passwordValidator');
 
 class UserController {
+  async index(req, res) {
+    const users = await UserRepository.findAll();
+
+    res.json(users);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -26,7 +32,7 @@ class UserController {
 
     const newUser = await UserRepository.create({ name, email, password_hash });
 
-    res.json(newUser);
+    res.json(newUser[0]);
   }
 
   async update(req, res) {

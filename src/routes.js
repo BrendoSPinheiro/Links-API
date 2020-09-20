@@ -9,6 +9,7 @@ const router = Router();
 // User Routes
 router.post('/users', UserController.store);
 router.put('/users/:id', authMiddleware, UserController.update);
+router.get('/users', UserController.index);
 
 // Link Routes
 router.get('/links', authMiddleware, LinkController.index);
